@@ -1,0 +1,6 @@
+if ('a' = 'a') then
+   putint(11)
+else
+   putint(11);
+   putint(11)
+end
