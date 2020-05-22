@@ -310,12 +310,12 @@ public class Parser {
     case Token.IF:
       {
         acceptIt();
-       // System. out. println(currentToken.spelling); 
         Expression eAST = parseExpression();
         accept(Token.THEN);
         Command c1AST = parseCommand();
-        accept(Token.ELSE);
-        Command c2AST = parseCommand();
+       // accept(Token.ELSE);
+       // Command c2AST = parseCommand();
+        Command c2AST = parseRestIfCommand();
         accept(Token.END);
         finish(commandPos);
         commandAST = new IfCommand(eAST, c1AST, c2AST, commandPos);
@@ -337,10 +337,10 @@ public class Parser {
     //{
     //case Token.ELSE:
     //case Token.IN:
-     // finish(commandPos);
+    //  finish(commandPos);
     //  commandAST = new EmptyCommand(commandPos);
     //}
-   // break;
+    //break;
 
     default:
       syntacticError("\"%\" cannot start a command",
@@ -352,6 +352,50 @@ public class Parser {
     return commandAST;
   }
 
+    
+///////////////////////////////////////////////////////////////////////////////
+//
+// EXPRESSION ELSEIF O ELSE
+//
+///////////////////////////////////////////////////////////////////////////////
+   Command parseRestIfCommand() throws SyntaxError {
+    Command commandAST = null; // in case there's a syntactic error
+
+    SourcePosition commandPos = new SourcePosition();
+    start(commandPos);
+    switch (currentToken.kind) {
+
+    case Token.ELSIF:
+      {
+        acceptIt();
+        Expression eAST = parseExpression();
+        accept(Token.THEN);
+        Command c1AST = parseCommand();
+        accept(Token.ELSE);
+        Command c2AST = parseCommand();
+        finish(commandPos);
+        commandAST = new IfCommand(eAST, c1AST, c2AST, commandPos);
+      }
+      break;
+
+    case Token.ELSE:
+      {
+        acceptIt();
+        Command c1AST = parseCommand();
+        finish(commandPos);
+        commandAST = c1AST;
+      }
+      break;
+
+    default:
+        syntacticError("\"%\" cannot start a command",
+        currentToken.spelling);
+      break;
+    }
+    return commandAST;
+  }
+  
+  
 ///////////////////////////////////////////////////////////////////////////////
 //
 // EXPRESSIONS
@@ -484,15 +528,16 @@ public class Parser {
         expressionAST = new UnaryExpression(opAST, eAST, expressionPos);
       }
       break;
-
+      
     case Token.LPAREN:
+      System.out.println(Token.LPAREN);
       acceptIt();
       expressionAST = parseExpression();
       accept(Token.RPAREN);
       break;
 
     default:
-      syntacticError("\"%\" cannot start an expression",
+      syntacticError("\"%\" cann?ot start an expression",
         currentToken.spelling);
       break;
 

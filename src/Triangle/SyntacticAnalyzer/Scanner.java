@@ -204,7 +204,7 @@ public final class Scanner {
     pos.start = sourceFile.getCurrentLine();
 
     kind = scanToken();
-
+    System.err.println(kind);
     pos.finish = sourceFile.getCurrentLine();
     tok = new Token(kind, currentSpelling.toString(), pos);
     if (debug)

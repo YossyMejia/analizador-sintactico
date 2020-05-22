@@ -1,6 +1,10 @@
 if ('a' = 'a') then
-   putint(11)
+   putint(1)
+elsif ('b' = 'b') then
+   putint(2)
+elsif ('c' = 'c') then
+   putint(6)
 else
-   putint(11);
-   putint(11)
+   putint(3);
+   putint(4)
 end
