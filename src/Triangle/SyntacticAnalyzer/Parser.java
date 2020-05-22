@@ -75,6 +75,7 @@ import Triangle.AbstractSyntaxTrees.SubscriptVname;
 import Triangle.AbstractSyntaxTrees.TypeDeclaration;
 import Triangle.AbstractSyntaxTrees.TypeDenoter;
 import Triangle.AbstractSyntaxTrees.UnaryExpression;
+import Triangle.AbstractSyntaxTrees.UntilCommand;
 import Triangle.AbstractSyntaxTrees.VarActualParameter;
 import Triangle.AbstractSyntaxTrees.VarDeclaration;
 import Triangle.AbstractSyntaxTrees.VarFormalParameter;
@@ -295,6 +296,50 @@ public class Parser {
       }
       break;
 
+    case Token.REPEAT:
+      {
+        acceptIt();
+        switch (currentToken.kind) {
+            case Token.WHILE:
+            {
+                acceptIt();
+                Expression eAST = parseExpression();
+                accept(Token.DO);
+                Command cAST = parseCommand();
+                accept(Token.END);
+                finish(commandPos);
+                commandAST = new WhileCommand(eAST, cAST, commandPos);
+            }
+            break;
+            
+            case Token.UNTIL:
+            {
+                acceptIt();
+                Expression eAST = parseExpression();
+                accept(Token.DO);
+                Command cAST = parseCommand();
+                accept(Token.END);
+                finish(commandPos);
+                commandAST = new UntilCommand(eAST, cAST, commandPos);
+            }
+            break;
+            
+            case Token.DO:
+            {
+                acceptIt();
+                Command cAST = parseCommand();
+                accept(Token.WHILE);
+                Expression eAST = parseExpression();
+                accept(Token.END);
+                finish(commandPos);
+                commandAST = new WhileCommand(eAST, cAST, commandPos);
+            }
+            break;
+            
+        }
+      }
+      break;
+     
     case Token.LET:
       {
         acceptIt();
@@ -313,34 +358,19 @@ public class Parser {
         Expression eAST = parseExpression();
         accept(Token.THEN);
         Command c1AST = parseCommand();
-       // accept(Token.ELSE);
-       // Command c2AST = parseCommand();
         Command c2AST = parseRestIfCommand();
         accept(Token.END);
         finish(commandPos);
         commandAST = new IfCommand(eAST, c1AST, c2AST, commandPos);
       }
       break;
-
-    case Token.WHILE:
-      {
-        acceptIt();
-        Expression eAST = parseExpression();
-        accept(Token.DO);
-        Command cAST = parseSingleCommand();
-        finish(commandPos);
-        commandAST = new WhileCommand(eAST, cAST, commandPos);
-      }
-      break;
       
-    //case Token.NIL:
-    //{
-    //case Token.ELSE:
-    //case Token.IN:
-    //  finish(commandPos);
-    //  commandAST = new EmptyCommand(commandPos);
-    //}
-    //break;
+    case Token.NIL:
+    {
+      finish(commandPos);
+      commandAST = new EmptyCommand(commandPos);
+    }
+    break;
 
     default:
       syntacticError("\"%\" cannot start a command",
@@ -371,10 +401,8 @@ public class Parser {
         Expression eAST = parseExpression();
         accept(Token.THEN);
         Command c1AST = parseCommand();
-        accept(Token.ELSE);
-        Command c2AST = parseCommand();
         finish(commandPos);
-        commandAST = new IfCommand(eAST, c1AST, c2AST, commandPos);
+        commandAST = new IfCommand(eAST, c1AST, parseRestIfCommand(), commandPos);
       }
       break;
 
@@ -537,7 +565,8 @@ public class Parser {
       break;
 
     default:
-      syntacticError("\"%\" cann?ot start an expression",
+       // System.out.println(currentToken.kind+currentToken.spelling);
+        syntacticError("\"%\" cann?ot start an expression",
         currentToken.spelling);
       break;
 

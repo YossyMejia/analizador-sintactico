@@ -68,6 +68,7 @@ import Triangle.AbstractSyntaxTrees.VarFormalParameter;
 import Triangle.AbstractSyntaxTrees.Visitor;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
 import Triangle.AbstractSyntaxTrees.WhileCommand;
+import Triangle.AbstractSyntaxTrees.UntilCommand;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
@@ -437,4 +438,9 @@ public class TreeVisitor implements Visitor {
         return(t);             
     }
     // </editor-fold>
+
+    @Override
+    public Object visitUntilCommand(UntilCommand ast, Object o) {
+        return(createBinary("Until Command", ast.E, ast.C));
+    }
 }

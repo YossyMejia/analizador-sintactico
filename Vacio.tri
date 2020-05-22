@@ -3,7 +3,7 @@ if ('a' = 'a') then
 elsif ('b' = 'b') then
    putint(2)
 elsif ('c' = 'c') then
-   putint(6)
+   putint(5)
 else
    putint(3);
    putint(4)

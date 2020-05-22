@@ -80,6 +80,7 @@ import Triangle.AbstractSyntaxTrees.VarFormalParameter;
 import Triangle.AbstractSyntaxTrees.Visitor;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
 import Triangle.AbstractSyntaxTrees.WhileCommand;
+import Triangle.AbstractSyntaxTrees.UntilCommand;
 
 public class LayoutVisitor implements Visitor {
 
@@ -542,5 +543,10 @@ public class LayoutVisitor implements Visitor {
 
     return r;
   }
+
+    @Override
+    public Object visitUntilCommand(UntilCommand ast, Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
 }

@@ -1,1 +1,5 @@
-nil
+! Test of while command, it runs correctly.
+repeat until true do
+   putint(5);
+   putint(6)
+end

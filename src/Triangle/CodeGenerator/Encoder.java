@@ -89,6 +89,7 @@ import Triangle.AbstractSyntaxTrees.Visitor;
 import Triangle.AbstractSyntaxTrees.Vname;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
 import Triangle.AbstractSyntaxTrees.WhileCommand;
+import Triangle.AbstractSyntaxTrees.UntilCommand;
 
 public final class Encoder implements Visitor {
 
@@ -995,4 +996,19 @@ public final class Encoder implements Visitor {
       }
     }
   }
+
+    @Override
+    public Object visitUntilCommand(UntilCommand ast, Object o) {
+        Frame frame = (Frame) o;
+        int jumpAddr, loopAddr;
+
+        jumpAddr = nextInstrAddr;
+        emit(Machine.JUMPop, 0, Machine.CBr, 0);
+        loopAddr = nextInstrAddr;
+        ast.C.visit(this, frame);
+        patch(jumpAddr, nextInstrAddr);
+        ast.E.visit(this, frame);
+        emit(Machine.JUMPIFop, Machine.trueRep, Machine.CBr, loopAddr);
+        return null;
+    }
 }

@@ -60,7 +60,7 @@ final class Token extends Object {
 
  
 
-  public static final int
+ public static final int
 
     // literals, identifiers, operators...
     INTLITERAL	= 0,
@@ -69,65 +69,84 @@ final class Token extends Object {
     OPERATOR	= 3,
 
     // reserved words - must be in alphabetical order...
-    ARRAY		= 4,
-    CONST		= 5,
-    DO			= 6,
-    ELSE		= 7,
-    ELSIF               = 8,
-    END			= 9,
-    FUNC		= 10,
-    IF			= 11,
-    IN			= 12,
-    LET			= 13,
-    NIL                 = 14,
-    OF			= 15,
-    PROC		= 16,
-    RECORD		= 17,
-    THEN		= 18,
-    TYPE		= 19,
-    VAR			= 20,
-    WHILE		= 21,
+    AND                 = 4,
+    ARRAY		= 5,
+    CONST		= 6,
+    DO			= 7,
+    ELSE		= 8,
+    ELSIF               = 9,
+    END			= 10,
+    EXIT                = 11,
+    FUNC		= 12,
+    IF			= 13,
+    IN			= 14,
+    LET			= 15,
+    NEXT                = 16,
+    NIL                 = 17,
+    OF			= 18,
+    PRIVATE             = 19,
+    PROC		= 20,
+    REC                 = 21,
+    RECORD		= 22,
+    REPEAT              = 23,
+    RETURN              = 24,
+    THEN		= 25,
+    TO                  = 26,
+    TYPE		= 27,
+    UNTIL               = 28,
+    VAR			= 29,
+    WHILE		= 30,
 
     // punctuation...
-    DOT			= 22,
-    COLON		= 23,
-    SEMICOLON	= 24,
-    COMMA		= 25,
-    BECOMES		= 26,
-    IS			= 27,
+    DOT			= 31,
+    COLON		= 32,
+    SEMICOLON	= 33,
+    COMMA		= 34,
+    BECOMES		= 35,
+    IS			= 36,
+
     // brackets...
-    LPAREN		= 28,
-    RPAREN		= 29,
-    LBRACKET	= 30,
-    RBRACKET	= 31,
-    LCURLY		= 32,
-    RCURLY		= 33,
-          
+    LPAREN		= 37,
+    RPAREN		= 38,
+    LBRACKET	= 39,
+    RBRACKET	= 40,
+    LCURLY		= 41,
+    RCURLY		= 42,
+
     // special tokens...
-    EOT			= 34,
-    ERROR		= 35;
+    EOT			= 43,
+    ERROR		= 44;
 
   private static String[] tokenTable = new String[] {
     "<int>",
     "<char>",
     "<identifier>",
     "<operator>",
+    "and",
     "array",
     "const",
     "do",
     "else",
     "elsif",
     "end",
+    "exit",
     "func",
     "if",
     "in",
     "let",
+    "next",
     "nil",
     "of",
+    "private",
     "proc",
+    "rec",
     "record",
+    "repeat",
+    "return",
     "then",
+    "to",
     "type",
+    "until",
     "var",
     "while",
     ".",
@@ -146,7 +165,7 @@ final class Token extends Object {
     "<error>"
   };
 
-  private static int	firstReservedWord = Token.ARRAY,
+  private final static int	firstReservedWord = Token.AND,
   				lastReservedWord  = Token.WHILE;
 
 }
