@@ -328,11 +328,26 @@ public class Parser {
             {
                 acceptIt();
                 Command cAST = parseCommand();
-                accept(Token.WHILE);
-                Expression eAST = parseExpression();
-                accept(Token.END);
-                finish(commandPos);
-                commandAST = new WhileCommand(eAST, cAST, commandPos);
+                switch (currentToken.kind) {
+                    case Token.WHILE:
+                    {
+                        acceptIt();
+                        Expression eAST = parseExpression();
+                        accept(Token.END);
+                        finish(commandPos);
+                        commandAST = new WhileCommand(eAST, cAST, commandPos);
+                    }
+                    break;
+                    case Token.UNTIL:
+                    {
+                        acceptIt();
+                        Expression eAST = parseExpression();
+                        accept(Token.END);
+                        finish(commandPos);
+                        commandAST = new UntilCommand(eAST, cAST, commandPos);
+                    }
+                    break;
+                }
             }
             break;
             
@@ -557,16 +572,16 @@ public class Parser {
       }
       break;
       
-    case Token.LPAREN:
-      System.out.println(Token.LPAREN);
-      acceptIt();
-      expressionAST = parseExpression();
-      accept(Token.RPAREN);
-      break;
+    //case Token.LPAREN:
+    //  System.out.println(Token.LPAREN);
+    //  acceptIt();
+    //  expressionAST = parseExpression();
+    //  accept(Token.RPAREN);
+    //  break;
 
     default:
        // System.out.println(currentToken.kind+currentToken.spelling);
-        syntacticError("\"%\" cann?ot start an expression",
+        syntacticError("\"%\" cannot start an expression",
         currentToken.spelling);
       break;
 

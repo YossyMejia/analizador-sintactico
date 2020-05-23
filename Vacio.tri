@@ -1,8 +1,8 @@
-if ('a' = 'a') then
+if 'a' = 'a' then
    putint(1)
-elsif ('b' = 'b') then
+elsif 'b' = 'b' then
    putint(2)
-elsif ('c' = 'c') then
+elsif 'c' = 'c' then
    putint(5)
 else
    putint(3);
