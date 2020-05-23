@@ -1,6 +1,0 @@
-! Test of while command, it runs correctly.
-repeat do
-   putint(5);
-   putint(6)
-while true = true
-end
