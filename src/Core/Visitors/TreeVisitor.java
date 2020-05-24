@@ -26,6 +26,7 @@ import Triangle.AbstractSyntaxTrees.EmptyCommand;
 import Triangle.AbstractSyntaxTrees.EmptyExpression;
 import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.ErrorTypeDenoter;
+import Triangle.AbstractSyntaxTrees.ForCommand;
 import Triangle.AbstractSyntaxTrees.FuncActualParameter;
 import Triangle.AbstractSyntaxTrees.FuncDeclaration;
 import Triangle.AbstractSyntaxTrees.FuncFormalParameter;
@@ -69,6 +70,8 @@ import Triangle.AbstractSyntaxTrees.Visitor;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
 import Triangle.AbstractSyntaxTrees.WhileCommand;
 import Triangle.AbstractSyntaxTrees.UntilCommand;
+import Triangle.AbstractSyntaxTrees.VarCommand;
+import Triangle.AbstractSyntaxTrees.VarExpDeclaration;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
@@ -98,11 +101,15 @@ public class TreeVisitor implements Visitor {
     }
     
     public Object visitEmptyCommand(EmptyCommand ast, Object o) {
-        return(createNullary("Empty Command"));
+        return(createNullary("Nil Command"));
     }
     
     public Object visitIfCommand(IfCommand ast, Object obj) {
         return(createTernary("If Command", ast.E, ast.C1, ast.C2));
+    }
+    
+    public Object visitForCommand(ForCommand ast, Object o) {
+        return(createTernary("For Command", ast.C1, ast.E, ast.C2));
     }
     
     public Object visitLetCommand(LetCommand ast, Object obj) {
@@ -116,6 +123,15 @@ public class TreeVisitor implements Visitor {
     public Object visitWhileCommand(WhileCommand ast, Object obj) {
         return(createBinary("While Command", ast.E, ast.C));
     }
+    
+    public Object visitUntilCommand(UntilCommand ast, Object o) {
+        return(createBinary("Until Command", ast.E, ast.C));
+    }
+
+    public Object visitVarCommand(VarCommand ast, Object o) {
+        return(createBinary("Var repeat Command", ast.I, ast.E));
+    }
+    
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc=" Expressions ">
@@ -197,6 +213,10 @@ public class TreeVisitor implements Visitor {
     
     public Object visitVarDeclaration(VarDeclaration ast, Object obj) {
         return(createBinary("Variable Declaration", ast.I, ast.T));
+    }
+    
+    public Object visitVarExpDeclaration(VarExpDeclaration ast, Object o) {
+        return(createBinary("VariableExpression Declaration", ast.I, ast.E));
     }
     // </editor-fold>
     
@@ -439,8 +459,9 @@ public class TreeVisitor implements Visitor {
     }
     // </editor-fold>
 
-    @Override
-    public Object visitUntilCommand(UntilCommand ast, Object o) {
-        return(createBinary("Until Command", ast.E, ast.C));
-    }
+    
+
+    
+
+    
 }

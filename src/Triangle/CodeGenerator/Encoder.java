@@ -46,6 +46,7 @@ import Triangle.AbstractSyntaxTrees.EmptyCommand;
 import Triangle.AbstractSyntaxTrees.EmptyExpression;
 import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.ErrorTypeDenoter;
+import Triangle.AbstractSyntaxTrees.ForCommand;
 import Triangle.AbstractSyntaxTrees.FuncActualParameter;
 import Triangle.AbstractSyntaxTrees.FuncDeclaration;
 import Triangle.AbstractSyntaxTrees.FuncFormalParameter;
@@ -90,6 +91,8 @@ import Triangle.AbstractSyntaxTrees.Vname;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
 import Triangle.AbstractSyntaxTrees.WhileCommand;
 import Triangle.AbstractSyntaxTrees.UntilCommand;
+import Triangle.AbstractSyntaxTrees.VarCommand;
+import Triangle.AbstractSyntaxTrees.VarExpDeclaration;
 
 public final class Encoder implements Visitor {
 
@@ -115,7 +118,7 @@ public final class Encoder implements Visitor {
   }
 
   public Object visitIfCommand(IfCommand ast, Object o) {
-    Frame frame = (Frame) o;
+   /* Frame frame = (Frame) o;
     int jumpifAddr, jumpAddr;
 
     Integer valSize = (Integer) ast.E.visit(this, frame);
@@ -126,16 +129,22 @@ public final class Encoder implements Visitor {
     emit(Machine.JUMPop, 0, Machine.CBr, 0);
     patch(jumpifAddr, nextInstrAddr);
     ast.C2.visit(this, frame);
-    patch(jumpAddr, nextInstrAddr);
+    patch(jumpAddr, nextInstrAddr);*/
     return null;
   }
+  
+    public Object visitForCommand(ForCommand ast, Object o) {
+       Frame frame = (Frame) o;
+        
+        return null;
+    }
 
   public Object visitLetCommand(LetCommand ast, Object o) {
-    Frame frame = (Frame) o;
+    /*Frame frame = (Frame) o;
     int extraSize = ((Integer) ast.D.visit(this, frame)).intValue();
     ast.C.visit(this, new Frame(frame, extraSize));
     if (extraSize > 0)
-      emit(Machine.POPop, 0, 0, extraSize);
+      emit(Machine.POPop, 0, 0, extraSize);*/
     return null;
   }
 
@@ -146,7 +155,7 @@ public final class Encoder implements Visitor {
   }
 
   public Object visitWhileCommand(WhileCommand ast, Object o) {
-    Frame frame = (Frame) o;
+    /*Frame frame = (Frame) o;
     int jumpAddr, loopAddr;
 
     jumpAddr = nextInstrAddr;
@@ -155,10 +164,31 @@ public final class Encoder implements Visitor {
     ast.C.visit(this, frame);
     patch(jumpAddr, nextInstrAddr);
     ast.E.visit(this, frame);
-    emit(Machine.JUMPIFop, Machine.trueRep, Machine.CBr, loopAddr);
+    emit(Machine.JUMPIFop, Machine.trueRep, Machine.CBr, loopAddr);*/
     return null;
   }
+  
+    public Object visitUntilCommand(UntilCommand ast, Object o) {
+        /*Frame frame = (Frame) o;
+        int jumpAddr, loopAddr;
 
+        jumpAddr = nextInstrAddr;
+        emit(Machine.JUMPop, 0, Machine.CBr, 0);
+        loopAddr = nextInstrAddr;
+        ast.C.visit(this, frame);
+        patch(jumpAddr, nextInstrAddr);
+        ast.E.visit(this, frame);
+        emit(Machine.JUMPIFop, Machine.trueRep, Machine.CBr, loopAddr);*/
+        return null;
+    }
+
+    @Override
+    public Object visitVarCommand(VarCommand ast, Object o) {
+        Frame frame = (Frame) o;
+        
+        return null;
+    }
+  
 
   // Expressions
   public Object visitArrayExpression(ArrayExpression ast, Object o) {
@@ -354,6 +384,12 @@ public final class Encoder implements Visitor {
     ast.entity = new KnownAddress(Machine.addressSize, frame.level, frame.size);
     writeTableDetails(ast);
     return new Integer(extraSize);
+  }
+  
+  public Object visitVarExpDeclaration(VarExpDeclaration ast, Object o) {
+    Frame frame = (Frame) o;
+        
+    return null;
   }
 
 
@@ -997,18 +1033,9 @@ public final class Encoder implements Visitor {
     }
   }
 
-    @Override
-    public Object visitUntilCommand(UntilCommand ast, Object o) {
-        Frame frame = (Frame) o;
-        int jumpAddr, loopAddr;
+    
 
-        jumpAddr = nextInstrAddr;
-        emit(Machine.JUMPop, 0, Machine.CBr, 0);
-        loopAddr = nextInstrAddr;
-        ast.C.visit(this, frame);
-        patch(jumpAddr, nextInstrAddr);
-        ast.E.visit(this, frame);
-        emit(Machine.JUMPIFop, Machine.trueRep, Machine.CBr, loopAddr);
-        return null;
-    }
+    
+
+    
 }

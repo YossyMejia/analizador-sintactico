@@ -38,6 +38,7 @@ import Triangle.AbstractSyntaxTrees.EmptyCommand;
 import Triangle.AbstractSyntaxTrees.EmptyExpression;
 import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.ErrorTypeDenoter;
+import Triangle.AbstractSyntaxTrees.ForCommand;
 import Triangle.AbstractSyntaxTrees.FuncActualParameter;
 import Triangle.AbstractSyntaxTrees.FuncDeclaration;
 import Triangle.AbstractSyntaxTrees.FuncFormalParameter;
@@ -81,6 +82,8 @@ import Triangle.AbstractSyntaxTrees.Visitor;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
 import Triangle.AbstractSyntaxTrees.WhileCommand;
 import Triangle.AbstractSyntaxTrees.UntilCommand;
+import Triangle.AbstractSyntaxTrees.VarCommand;
+import Triangle.AbstractSyntaxTrees.VarExpDeclaration;
 
 public class LayoutVisitor implements Visitor {
 
@@ -110,6 +113,11 @@ public class LayoutVisitor implements Visitor {
     return layoutTernary("IfCom.", ast.E, ast.C1, ast.C2);
   }
 
+   public Object visitForCommand(ForCommand ast, Object o) {
+       return layoutTernary("VarCom.",ast.C1, ast.E, ast.C2);
+   }
+
+  
   public Object visitLetCommand(LetCommand ast, Object obj) {
     return layoutBinary("LetCom.", ast.D, ast.C);
   }
@@ -122,6 +130,13 @@ public class LayoutVisitor implements Visitor {
     return layoutBinary("WhileCom.", ast.E, ast.C);
   }
 
+  public Object visitUntilCommand(UntilCommand ast, Object o) {
+      return layoutBinary("UntilCom.", ast.E, ast.C);
+  }
+
+  public Object visitVarCommand(VarCommand ast, Object o) {
+      return layoutBinary("VarCom.", ast.I, ast.E);
+  }
 
   // Expressions
   public Object visitArrayExpression(ArrayExpression ast, Object obj) {
@@ -201,7 +216,10 @@ public class LayoutVisitor implements Visitor {
   public Object visitVarDeclaration(VarDeclaration ast, Object obj) {
     return layoutBinary("VarDecl.", ast.I, ast.T);
   }
-
+  
+  public Object visitVarExpDeclaration(VarExpDeclaration ast, Object o) {
+    return layoutBinary("VarDeclExpr.", ast.I, ast.E);
+  }
 
   // Array Aggregates
   public Object visitMultipleArrayAggregate(MultipleArrayAggregate ast, Object obj) {
@@ -544,9 +562,7 @@ public class LayoutVisitor implements Visitor {
     return r;
   }
 
-    @Override
-    public Object visitUntilCommand(UntilCommand ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
 
+    
 }

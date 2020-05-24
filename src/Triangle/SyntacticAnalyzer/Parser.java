@@ -37,6 +37,7 @@ import Triangle.AbstractSyntaxTrees.EmptyCommand;
 import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.Expression;
 import Triangle.AbstractSyntaxTrees.FieldTypeDenoter;
+import Triangle.AbstractSyntaxTrees.ForCommand;
 import Triangle.AbstractSyntaxTrees.FormalParameter;
 import Triangle.AbstractSyntaxTrees.FormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.FuncActualParameter;
@@ -77,7 +78,9 @@ import Triangle.AbstractSyntaxTrees.TypeDenoter;
 import Triangle.AbstractSyntaxTrees.UnaryExpression;
 import Triangle.AbstractSyntaxTrees.UntilCommand;
 import Triangle.AbstractSyntaxTrees.VarActualParameter;
+import Triangle.AbstractSyntaxTrees.VarCommand;
 import Triangle.AbstractSyntaxTrees.VarDeclaration;
+import Triangle.AbstractSyntaxTrees.VarExpDeclaration;
 import Triangle.AbstractSyntaxTrees.VarFormalParameter;
 import Triangle.AbstractSyntaxTrees.Vname;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
@@ -351,6 +354,22 @@ public class Parser {
             }
             break;
             
+            case Token.VAR:
+            {
+                acceptIt();
+                Identifier iASTV = parseIdentifier();
+                accept(Token.IN);
+                Expression eASTV = parseExpression();
+                Command c1AST = new VarCommand(iASTV, eASTV, commandPos);
+                accept(Token.TO);
+                Expression eAST = parseExpression();
+                accept(Token.DO);
+                Command c2AST = parseCommand();
+                accept(Token.END);
+                finish(commandPos);
+                commandAST = new ForCommand(c1AST, eAST, c2AST, commandPos);
+            }
+            break;
         }
       }
       break;
@@ -382,6 +401,7 @@ public class Parser {
       
     case Token.NIL:
     {
+      acceptIt();
       finish(commandPos);
       commandAST = new EmptyCommand(commandPos);
     }
@@ -711,10 +731,24 @@ public class Parser {
       {
         acceptIt();
         Identifier iAST = parseIdentifier();
-        accept(Token.COLON);
-        TypeDenoter tAST = parseTypeDenoter();
-        finish(declarationPos);
-        declarationAST = new VarDeclaration(iAST, tAST, declarationPos);
+        switch (currentToken.kind) {
+            case Token.COLON:
+            {
+                acceptIt();
+                TypeDenoter tAST = parseTypeDenoter();
+                finish(declarationPos);
+                declarationAST = new VarDeclaration(iAST, tAST, declarationPos);
+            }
+            break;
+            case Token.BECOMES:
+            {
+                acceptIt();
+                Expression eAST = parseExpression();
+                finish(declarationPos);
+                declarationAST = new VarExpDeclaration(iAST, eAST, declarationPos);
+            }
+            break;
+        }
       }
       break;
 
@@ -726,7 +760,8 @@ public class Parser {
         FormalParameterSequence fpsAST = parseFormalParameterSequence();
         accept(Token.RPAREN);
         accept(Token.IS);
-        Command cAST = parseSingleCommand();
+        Command cAST = parseCommand();
+        accept(Token.END);
         finish(declarationPos);
         declarationAST = new ProcDeclaration(iAST, fpsAST, cAST, declarationPos);
       }

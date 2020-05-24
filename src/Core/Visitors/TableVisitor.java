@@ -26,6 +26,7 @@ import Triangle.AbstractSyntaxTrees.EmptyCommand;
 import Triangle.AbstractSyntaxTrees.EmptyExpression;
 import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.ErrorTypeDenoter;
+import Triangle.AbstractSyntaxTrees.ForCommand;
 import Triangle.AbstractSyntaxTrees.FuncActualParameter;
 import Triangle.AbstractSyntaxTrees.FuncDeclaration;
 import Triangle.AbstractSyntaxTrees.FuncFormalParameter;
@@ -69,6 +70,8 @@ import Triangle.AbstractSyntaxTrees.Visitor;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
 import Triangle.AbstractSyntaxTrees.WhileCommand;
 import Triangle.AbstractSyntaxTrees.UntilCommand;
+import Triangle.AbstractSyntaxTrees.VarCommand;
+import Triangle.AbstractSyntaxTrees.VarExpDeclaration;
 import Triangle.CodeGenerator.Field;
 import Triangle.CodeGenerator.KnownAddress;
 import Triangle.CodeGenerator.KnownRoutine;
@@ -121,6 +124,14 @@ public class TableVisitor implements Visitor {
       return(null);
   }
   
+  public Object visitForCommand(ForCommand ast, Object o) {
+      ast.C1.visit(this, null);
+      ast.E.visit(this, null);
+      ast.C2.visit(this, null);
+      
+      return(null);
+  }
+  
   public Object visitLetCommand(LetCommand ast, Object o) {     
       ast.D.visit(this, null);
       ast.C.visit(this, null);
@@ -141,6 +152,21 @@ public class TableVisitor implements Visitor {
       
       return(null);
   }
+  
+  public Object visitUntilCommand(UntilCommand ast, Object o) {
+      ast.E.visit(this, null);
+      ast.C.visit(this, null);
+      
+      return(null);
+    }
+  
+    public Object visitVarCommand(VarCommand ast, Object o) {
+      ast.I.visit(this, null);
+      ast.E.visit(this, null);
+      
+      return(null);
+    }
+  
   // </editor-fold>
 
   // <editor-fold defaultstate="collapsed" desc=" Expressions ">
@@ -213,6 +239,8 @@ public class TableVisitor implements Visitor {
       
       return(null);
   }
+  
+  
   // </editor-fold>
   
   // <editor-fold defaultstate="collapsed" desc=" Declarations ">
@@ -307,6 +335,20 @@ public class TableVisitor implements Visitor {
       } catch (NullPointerException e) { }
       
       ast.T.visit(this, null);
+      return(null);
+  }
+  
+  public Object visitVarExpDeclaration(VarExpDeclaration ast, Object o) {
+      //try {
+      //addIdentifier(ast.I.spelling, 
+      //        "KnownAddress", 
+      //        (ast.entity!=null?ast.entity.size:0), 
+      //        ((KnownAddress)ast.entity).address.level, 
+      //        ((KnownAddress)ast.entity).address.displacement, 
+       //       -1);
+      //} catch (NullPointerException e) { }
+      
+      //ast.E.visit(this, null);
       return(null);
   }
   
@@ -624,8 +666,6 @@ public class TableVisitor implements Visitor {
     private DefaultTableModel model;
     // </editor-fold>
 
-    @Override
-    public Object visitUntilCommand(UntilCommand ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
+
 }
