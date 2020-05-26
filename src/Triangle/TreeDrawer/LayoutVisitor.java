@@ -82,8 +82,10 @@ import Triangle.AbstractSyntaxTrees.Visitor;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
 import Triangle.AbstractSyntaxTrees.WhileCommand;
 import Triangle.AbstractSyntaxTrees.UntilCommand;
-import Triangle.AbstractSyntaxTrees.VarCommand;
+import Triangle.AbstractSyntaxTrees.RepVarDeclaration;
 import Triangle.AbstractSyntaxTrees.VarExpDeclaration;
+import Triangle.AbstractSyntaxTrees.doUntilCommand;
+import Triangle.AbstractSyntaxTrees.doWhileCommand;
 
 public class LayoutVisitor implements Visitor {
 
@@ -114,7 +116,7 @@ public class LayoutVisitor implements Visitor {
   }
 
    public Object visitForCommand(ForCommand ast, Object o) {
-       return layoutTernary("VarCom.",ast.C1, ast.E, ast.C2);
+       return layoutTernary("ForCom.",ast.D, ast.E, ast.C);
    }
 
   
@@ -129,14 +131,22 @@ public class LayoutVisitor implements Visitor {
   public Object visitWhileCommand(WhileCommand ast, Object obj) {
     return layoutBinary("WhileCom.", ast.E, ast.C);
   }
+  
+  public Object visitdoWhileCommand(doWhileCommand ast, Object o) {
+    return layoutBinary("doWhileCom.", ast.C, ast.E);
+  }
+
+   
+  public Object visitdoUntilCommand(doUntilCommand ast, Object o) {
+    return layoutBinary("doUntilCom.", ast.C, ast.E);
+  }
+
 
   public Object visitUntilCommand(UntilCommand ast, Object o) {
       return layoutBinary("UntilCom.", ast.E, ast.C);
   }
 
-  public Object visitVarCommand(VarCommand ast, Object o) {
-      return layoutBinary("VarCom.", ast.I, ast.E);
-  }
+  
 
   // Expressions
   public Object visitArrayExpression(ArrayExpression ast, Object obj) {
@@ -185,6 +195,10 @@ public class LayoutVisitor implements Visitor {
 
 
   // Declarations
+  public Object visitRepVarDeclaration(RepVarDeclaration ast, Object o) {
+      return layoutBinary("RepVarDecl.", ast.I, ast.E);
+  }
+  
   public Object visitBinaryOperatorDeclaration(BinaryOperatorDeclaration ast, Object obj) {
     return layoutQuaternary("Bin.Op.Decl.", ast.O, ast.ARG1, ast.ARG2, ast.RES);
   }
@@ -562,6 +576,7 @@ public class LayoutVisitor implements Visitor {
     return r;
   }
 
+    
     
 
     

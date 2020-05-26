@@ -70,8 +70,10 @@ import Triangle.AbstractSyntaxTrees.Visitor;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
 import Triangle.AbstractSyntaxTrees.WhileCommand;
 import Triangle.AbstractSyntaxTrees.UntilCommand;
-import Triangle.AbstractSyntaxTrees.VarCommand;
+import Triangle.AbstractSyntaxTrees.RepVarDeclaration;
 import Triangle.AbstractSyntaxTrees.VarExpDeclaration;
+import Triangle.AbstractSyntaxTrees.doUntilCommand;
+import Triangle.AbstractSyntaxTrees.doWhileCommand;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
@@ -109,7 +111,7 @@ public class TreeVisitor implements Visitor {
     }
     
     public Object visitForCommand(ForCommand ast, Object o) {
-        return(createTernary("For Command", ast.C1, ast.E, ast.C2));
+        return(createTernary("For Command", ast.D, ast.E, ast.C));
     }
     
     public Object visitLetCommand(LetCommand ast, Object obj) {
@@ -124,13 +126,19 @@ public class TreeVisitor implements Visitor {
         return(createBinary("While Command", ast.E, ast.C));
     }
     
+    public Object visitdoWhileCommand(doWhileCommand ast, Object o) {
+        return(createBinary("doWhile Command", ast.C, ast.E));
+    }
+
+    
+    public Object visitdoUntilCommand(doUntilCommand ast, Object o) {
+        return(createBinary("doUntil Command", ast.C, ast.E));
+    }
+    
     public Object visitUntilCommand(UntilCommand ast, Object o) {
         return(createBinary("Until Command", ast.E, ast.C));
     }
 
-    public Object visitVarCommand(VarCommand ast, Object o) {
-        return(createBinary("Var repeat Command", ast.I, ast.E));
-    }
     
     // </editor-fold>
     
@@ -185,6 +193,10 @@ public class TreeVisitor implements Visitor {
     // Declarations
     public Object visitBinaryOperatorDeclaration(BinaryOperatorDeclaration ast, Object obj) {
         return(createQuaternary("Binary Operator Declaration", ast.O, ast.ARG1, ast.ARG2, ast.RES));
+    }
+    
+    public Object visitRepVarDeclaration(RepVarDeclaration ast, Object o) {
+        return(createBinary("Var repeat declaration", ast.I, ast.E));
     }
     
     public Object visitConstDeclaration(ConstDeclaration ast, Object obj) {
@@ -458,6 +470,9 @@ public class TreeVisitor implements Visitor {
         return(t);             
     }
     // </editor-fold>
+
+    
+    
 
     
 

@@ -91,8 +91,10 @@ import Triangle.AbstractSyntaxTrees.Vname;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
 import Triangle.AbstractSyntaxTrees.WhileCommand;
 import Triangle.AbstractSyntaxTrees.UntilCommand;
-import Triangle.AbstractSyntaxTrees.VarCommand;
+import Triangle.AbstractSyntaxTrees.RepVarDeclaration;
 import Triangle.AbstractSyntaxTrees.VarExpDeclaration;
+import Triangle.AbstractSyntaxTrees.doUntilCommand;
+import Triangle.AbstractSyntaxTrees.doWhileCommand;
 
 public final class Encoder implements Visitor {
 
@@ -168,6 +170,17 @@ public final class Encoder implements Visitor {
     return null;
   }
   
+  public Object visitdoWhileCommand(doWhileCommand ast, Object o) {
+       return null;
+  }
+
+   
+  public Object visitdoUntilCommand(doUntilCommand ast, Object o) {
+        return null;
+  }
+
+  
+  
     public Object visitUntilCommand(UntilCommand ast, Object o) {
         /*Frame frame = (Frame) o;
         int jumpAddr, loopAddr;
@@ -182,12 +195,10 @@ public final class Encoder implements Visitor {
         return null;
     }
 
-    @Override
-    public Object visitVarCommand(VarCommand ast, Object o) {
-        Frame frame = (Frame) o;
-        
-        return null;
-    }
+    
+    
+    
+
   
 
   // Expressions
@@ -290,6 +301,12 @@ public final class Encoder implements Visitor {
     return new Integer(0);
   }
 
+   public Object visitRepVarDeclaration(RepVarDeclaration ast, Object o) {
+        Frame frame = (Frame) o;
+        
+        return null;
+    }
+  
   public Object visitConstDeclaration(ConstDeclaration ast, Object o) {
     Frame frame = (Frame) o;
     int extraSize = 0;
@@ -1033,6 +1050,7 @@ public final class Encoder implements Visitor {
     }
   }
 
+   
     
 
     

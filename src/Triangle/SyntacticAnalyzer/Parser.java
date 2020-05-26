@@ -78,13 +78,15 @@ import Triangle.AbstractSyntaxTrees.TypeDenoter;
 import Triangle.AbstractSyntaxTrees.UnaryExpression;
 import Triangle.AbstractSyntaxTrees.UntilCommand;
 import Triangle.AbstractSyntaxTrees.VarActualParameter;
-import Triangle.AbstractSyntaxTrees.VarCommand;
+import Triangle.AbstractSyntaxTrees.RepVarDeclaration;
 import Triangle.AbstractSyntaxTrees.VarDeclaration;
 import Triangle.AbstractSyntaxTrees.VarExpDeclaration;
 import Triangle.AbstractSyntaxTrees.VarFormalParameter;
 import Triangle.AbstractSyntaxTrees.Vname;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
 import Triangle.AbstractSyntaxTrees.WhileCommand;
+import Triangle.AbstractSyntaxTrees.doUntilCommand;
+import Triangle.AbstractSyntaxTrees.doWhileCommand;
 
 public class Parser {
 
@@ -338,7 +340,7 @@ public class Parser {
                         Expression eAST = parseExpression();
                         accept(Token.END);
                         finish(commandPos);
-                        commandAST = new WhileCommand(eAST, cAST, commandPos);
+                        commandAST = new doWhileCommand(cAST, eAST, commandPos);
                     }
                     break;
                     case Token.UNTIL:
@@ -347,7 +349,7 @@ public class Parser {
                         Expression eAST = parseExpression();
                         accept(Token.END);
                         finish(commandPos);
-                        commandAST = new UntilCommand(eAST, cAST, commandPos);
+                        commandAST = new doUntilCommand(cAST, eAST, commandPos);
                     }
                     break;
                 }
@@ -360,14 +362,14 @@ public class Parser {
                 Identifier iASTV = parseIdentifier();
                 accept(Token.IN);
                 Expression eASTV = parseExpression();
-                Command c1AST = new VarCommand(iASTV, eASTV, commandPos);
+                Declaration dAST = new RepVarDeclaration(iASTV, eASTV, commandPos);
                 accept(Token.TO);
                 Expression eAST = parseExpression();
                 accept(Token.DO);
-                Command c2AST = parseCommand();
+                Command cAST = parseCommand();
                 accept(Token.END);
                 finish(commandPos);
-                commandAST = new ForCommand(c1AST, eAST, c2AST, commandPos);
+                commandAST = new ForCommand(dAST, eAST, cAST, commandPos);
             }
             break;
         }
@@ -592,12 +594,11 @@ public class Parser {
       }
       break;
       
-    //case Token.LPAREN:
-    //  System.out.println(Token.LPAREN);
-    //  acceptIt();
-    //  expressionAST = parseExpression();
-    //  accept(Token.RPAREN);
-    //  break;
+    case Token.LPAREN:
+      acceptIt();
+      expressionAST = parseExpression();
+      accept(Token.RPAREN);
+      break;
 
     default:
        // System.out.println(currentToken.kind+currentToken.spelling);

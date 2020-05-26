@@ -12,16 +12,16 @@ import Triangle.SyntacticAnalyzer.SourcePosition;
  *
  * @author XPC
  */
-public class VarCommand extends Command {
+public class RepVarDeclaration extends Declaration {
 
-  public VarCommand (Identifier iAST, Expression eAST, SourcePosition thePosition) {
+  public RepVarDeclaration (Identifier iAST, Expression eAST, SourcePosition thePosition) {
     super (thePosition);
     I = iAST;
     E = eAST;
   }
 
   public Object visit(Visitor v, Object o) {
-    return v.visitVarCommand(this, o);
+    return v.visitRepVarDeclaration(this, o);
   }
   
   public Identifier I;

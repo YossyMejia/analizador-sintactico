@@ -6,18 +6,11 @@
         <group>
             <file>file:/E:/User/Documentos/Semestre/Compiladores/analizador-sintactico/src/Triangle/AbstractSyntaxTrees/ForCommand.java</file>
             <file>file:/E:/User/Documentos/Semestre/Compiladores/analizador-sintactico/src/Triangle/AbstractSyntaxTrees/Visitor.java</file>
-            <file>file:/E:/User/Documentos/Semestre/Compiladores/analizador-sintactico/src/Triangle/AbstractSyntaxTrees/VarDeclaration.java</file>
-            <file>file:/E:/User/Documentos/Semestre/Compiladores/analizador-sintactico/src/Triangle/SyntacticAnalyzer/Token.java</file>
-            <file>file:/E:/User/Documentos/Semestre/Compiladores/analizador-sintactico/src/Triangle/CodeGenerator/Encoder.java</file>
-            <file>file:/E:/User/Documentos/Semestre/Compiladores/analizador-sintactico/src/Triangle/AbstractSyntaxTrees/VarExpDeclaration.java</file>
-            <file>file:/E:/User/Documentos/Semestre/Compiladores/analizador-sintactico/src/Triangle/AbstractSyntaxTrees/IfCommand.java</file>
-            <file>file:/E:/User/Documentos/Semestre/Compiladores/analizador-sintactico/src/Triangle/SyntacticAnalyzer/Scanner.java</file>
             <file>file:/E:/User/Documentos/Semestre/Compiladores/analizador-sintactico/src/Triangle/SyntacticAnalyzer/Parser.java</file>
-            <file>file:/E:/User/Documentos/Semestre/Compiladores/analizador-sintactico/src/Triangle/AbstractSyntaxTrees/IfExpression.java</file>
             <file>file:/E:/User/Documentos/Semestre/Compiladores/analizador-sintactico/src/Core/Visitors/TableVisitor.java</file>
             <file>file:/E:/User/Documentos/Semestre/Compiladores/analizador-sintactico/src/Triangle/TreeDrawer/LayoutVisitor.java</file>
             <file>file:/E:/User/Documentos/Semestre/Compiladores/analizador-sintactico/src/Triangle/ContextualAnalyzer/Checker.java</file>
-            <file>file:/E:/User/Documentos/Semestre/Compiladores/analizador-sintactico/src/Triangle/AbstractSyntaxTrees/VarCommand.java</file>
+            <file>file:/E:/User/Documentos/Semestre/Compiladores/analizador-sintactico/src/Triangle/CodeGenerator/Encoder.java</file>
             <file>file:/E:/User/Documentos/Semestre/Compiladores/analizador-sintactico/src/Core/Visitors/TreeVisitor.java</file>
         </group>
     </open-files>

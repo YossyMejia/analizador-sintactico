@@ -24,7 +24,8 @@ public interface Visitor {
   public abstract Object visitLetCommand(LetCommand ast, Object o);
   public abstract Object visitSequentialCommand(SequentialCommand ast, Object o);
   public abstract Object visitWhileCommand(WhileCommand ast, Object o);
-  public abstract Object visitVarCommand(VarCommand ast, Object o);
+  public abstract Object visitdoWhileCommand(doWhileCommand ast, Object o);
+  public abstract Object visitdoUntilCommand(doUntilCommand ast, Object o);
   public abstract Object visitUntilCommand(UntilCommand ast, Object o);
   public abstract Object visitForCommand(ForCommand ast, Object o);
 
@@ -51,6 +52,7 @@ public interface Visitor {
   public abstract Object visitUnaryOperatorDeclaration(UnaryOperatorDeclaration ast, Object o);
   public abstract Object visitVarDeclaration(VarDeclaration ast, Object o);
   public abstract Object visitVarExpDeclaration(VarExpDeclaration ast, Object o);
+  public abstract Object visitRepVarDeclaration(RepVarDeclaration ast, Object o);
 
   
   // Array Aggregates

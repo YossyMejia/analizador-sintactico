@@ -87,8 +87,10 @@ import Triangle.AbstractSyntaxTrees.Visitor;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
 import Triangle.AbstractSyntaxTrees.WhileCommand;
 import Triangle.AbstractSyntaxTrees.UntilCommand;
-import Triangle.AbstractSyntaxTrees.VarCommand;
+import Triangle.AbstractSyntaxTrees.RepVarDeclaration;
 import Triangle.AbstractSyntaxTrees.VarExpDeclaration;
+import Triangle.AbstractSyntaxTrees.doUntilCommand;
+import Triangle.AbstractSyntaxTrees.doWhileCommand;
 import Triangle.SyntacticAnalyzer.SourcePosition;
 
 public final class Checker implements Visitor {
@@ -140,8 +142,8 @@ public final class Checker implements Visitor {
     TypeDenoter eType = (TypeDenoter) ast.E.visit(this, null);
     if (! eType.equals(StdEnvironment.booleanType))
       reporter.reportError("Boolean expression expected here", "", ast.E.position);
-    ast.C1.visit(this, null);
-    ast.C2.visit(this, null);
+    ast.D.visit(this, null);
+    ast.C.visit(this, null);
     return null;
   }
   
@@ -159,6 +161,8 @@ public final class Checker implements Visitor {
     return null;
   }
 
+  
+  
   public Object visitWhileCommand(WhileCommand ast, Object o) {
     TypeDenoter eType = (TypeDenoter) ast.E.visit(this, null);
     if (! eType.equals(StdEnvironment.booleanType))
@@ -166,22 +170,33 @@ public final class Checker implements Visitor {
     ast.C.visit(this, null);
     return null;
   }
+  
+  public Object visitdoWhileCommand(doWhileCommand ast, Object o) {
+    TypeDenoter eType = (TypeDenoter) ast.E.visit(this, null);
+    if (! eType.equals(StdEnvironment.booleanType))
+      reporter.reportError("Boolean expression expected here", "", ast.E.position);
+    ast.C.visit(this, null);
+    return null;
+  }
 
-    public Object visitUntilCommand(UntilCommand ast, Object o) {
-        TypeDenoter eType = (TypeDenoter) ast.E.visit(this, null);
-        if (! eType.equals(StdEnvironment.booleanType))
-            reporter.reportError("Boolean expression expected here", "", ast.E.position);
-        ast.C.visit(this, null);
-        return null;
-    }
+  public Object visitdoUntilCommand(doUntilCommand ast, Object o) {
+    TypeDenoter eType = (TypeDenoter) ast.E.visit(this, null);
+    if (! eType.equals(StdEnvironment.booleanType))
+      reporter.reportError("Boolean expression expected here", "", ast.E.position);
+    ast.C.visit(this, null);
+    return null;
+  }
 
-    public Object visitVarCommand(VarCommand ast, Object o) {
-        TypeDenoter eType = (TypeDenoter) ast.E.visit(this, null);
-        if (! eType.equals(StdEnvironment.booleanType))
-            reporter.reportError("Boolean expression expected here", "", ast.E.position);
-        ast.I.visit(this, null);
-        return null;
-    }
+
+  public Object visitUntilCommand(UntilCommand ast, Object o) {
+    TypeDenoter eType = (TypeDenoter) ast.E.visit(this, null);
+    if (! eType.equals(StdEnvironment.booleanType))
+        reporter.reportError("Boolean expression expected here", "", ast.E.position);
+    ast.C.visit(this, null);
+    return null;
+  }
+
+   
   
   // Expressions
 
@@ -316,6 +331,14 @@ public final class Checker implements Visitor {
     return null;
   }
 
+  public Object visitRepVarDeclaration(RepVarDeclaration ast, Object o) {
+    TypeDenoter eType = (TypeDenoter) ast.E.visit(this, null);
+    if (! eType.equals(StdEnvironment.booleanType))
+        reporter.reportError("Boolean expression expected here", "", ast.E.position);
+    ast.I.visit(this, null);
+    return null;
+  }
+  
   public Object visitConstDeclaration(ConstDeclaration ast, Object o) {
     TypeDenoter eType = (TypeDenoter) ast.E.visit(this, null);
     idTable.enter(ast.I.spelling, ast);
@@ -977,6 +1000,7 @@ public final class Checker implements Visitor {
 
   }
 
+   
     
     
 

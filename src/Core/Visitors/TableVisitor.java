@@ -70,8 +70,10 @@ import Triangle.AbstractSyntaxTrees.Visitor;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
 import Triangle.AbstractSyntaxTrees.WhileCommand;
 import Triangle.AbstractSyntaxTrees.UntilCommand;
-import Triangle.AbstractSyntaxTrees.VarCommand;
+import Triangle.AbstractSyntaxTrees.RepVarDeclaration;
 import Triangle.AbstractSyntaxTrees.VarExpDeclaration;
+import Triangle.AbstractSyntaxTrees.doUntilCommand;
+import Triangle.AbstractSyntaxTrees.doWhileCommand;
 import Triangle.CodeGenerator.Field;
 import Triangle.CodeGenerator.KnownAddress;
 import Triangle.CodeGenerator.KnownRoutine;
@@ -125,9 +127,9 @@ public class TableVisitor implements Visitor {
   }
   
   public Object visitForCommand(ForCommand ast, Object o) {
-      ast.C1.visit(this, null);
+      ast.D.visit(this, null);
       ast.E.visit(this, null);
-      ast.C2.visit(this, null);
+      ast.C.visit(this, null);
       
       return(null);
   }
@@ -153,6 +155,20 @@ public class TableVisitor implements Visitor {
       return(null);
   }
   
+  public Object visitdoWhileCommand(doWhileCommand ast, Object o) {
+      ast.C.visit(this, null);
+      ast.E.visit(this, null);
+      
+      return(null);
+  }
+
+  public Object visitdoUntilCommand(doUntilCommand ast, Object o) {
+      ast.C.visit(this, null);
+      ast.E.visit(this, null);
+      
+      return(null);
+  }
+  
   public Object visitUntilCommand(UntilCommand ast, Object o) {
       ast.E.visit(this, null);
       ast.C.visit(this, null);
@@ -160,12 +176,6 @@ public class TableVisitor implements Visitor {
       return(null);
     }
   
-    public Object visitVarCommand(VarCommand ast, Object o) {
-      ast.I.visit(this, null);
-      ast.E.visit(this, null);
-      
-      return(null);
-    }
   
   // </editor-fold>
 
@@ -351,6 +361,13 @@ public class TableVisitor implements Visitor {
       //ast.E.visit(this, null);
       return(null);
   }
+  
+  public Object visitRepVarDeclaration(RepVarDeclaration ast, Object o) {
+      ast.I.visit(this, null);
+      ast.E.visit(this, null);
+      
+      return(null);
+    }
   
   // </editor-fold>
 
@@ -665,6 +682,8 @@ public class TableVisitor implements Visitor {
   // <editor-fold defaultstate="collapsed" desc=" Attributes ">
     private DefaultTableModel model;
     // </editor-fold>
+
+    
 
     
 
