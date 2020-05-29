@@ -44,6 +44,7 @@ import Triangle.AbstractSyntaxTrees.MultipleFieldTypeDenoter;
 import Triangle.AbstractSyntaxTrees.MultipleFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.MultipleRecordAggregate;
 import Triangle.AbstractSyntaxTrees.Operator;
+import Triangle.AbstractSyntaxTrees.PriDeclaration;
 import Triangle.AbstractSyntaxTrees.ProcActualParameter;
 import Triangle.AbstractSyntaxTrees.ProcDeclaration;
 import Triangle.AbstractSyntaxTrees.ProcFormalParameter;
@@ -332,6 +333,10 @@ public class TableVisitor implements Visitor {
   
   public Object visitUnaryOperatorDeclaration(UnaryOperatorDeclaration ast, Object o) {        
       return(null);
+  }
+  
+  public Object visitPriDeclaration(PriDeclaration ast, Object o) {  
+    return null;
   }
   
   public Object visitVarDeclaration(VarDeclaration ast, Object o) {      

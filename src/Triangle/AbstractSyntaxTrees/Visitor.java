@@ -45,6 +45,7 @@ public interface Visitor {
   // Declarations
   public abstract Object visitBinaryOperatorDeclaration(BinaryOperatorDeclaration ast, Object o);
   public abstract Object visitConstDeclaration(ConstDeclaration ast, Object o);
+  public abstract Object visitPriDeclaration(PriDeclaration ast, Object o);
   public abstract Object visitFuncDeclaration(FuncDeclaration ast, Object o);
   public abstract Object visitProcDeclaration(ProcDeclaration ast, Object o);
   public abstract Object visitSequentialDeclaration(SequentialDeclaration ast, Object o);

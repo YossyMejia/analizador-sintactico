@@ -64,6 +64,7 @@ import Triangle.AbstractSyntaxTrees.MultipleFieldTypeDenoter;
 import Triangle.AbstractSyntaxTrees.MultipleFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.MultipleRecordAggregate;
 import Triangle.AbstractSyntaxTrees.Operator;
+import Triangle.AbstractSyntaxTrees.PriDeclaration;
 import Triangle.AbstractSyntaxTrees.ProcActualParameter;
 import Triangle.AbstractSyntaxTrees.ProcDeclaration;
 import Triangle.AbstractSyntaxTrees.ProcFormalParameter;
@@ -306,6 +307,12 @@ public final class Encoder implements Visitor {
         
         return null;
     }
+   
+   public Object visitPriDeclaration(PriDeclaration ast, Object o) {
+    Frame frame = (Frame) o;
+        
+    return null;
+  }
   
   public Object visitConstDeclaration(ConstDeclaration ast, Object o) {
     Frame frame = (Frame) o;
@@ -373,12 +380,13 @@ public final class Encoder implements Visitor {
 
   public Object visitSequentialDeclaration(SequentialDeclaration ast, Object o) {
     Frame frame = (Frame) o;
-    int extraSize1, extraSize2;
+    /*int extraSize1, extraSize2;
 
     extraSize1 = ((Integer) ast.D1.visit(this, frame)).intValue();
     Frame frame1 = new Frame (frame, extraSize1);
     extraSize2 = ((Integer) ast.D2.visit(this, frame1)).intValue();
-    return new Integer(extraSize1 + extraSize2);
+    return new Integer(extraSize1 + extraSize2);*/
+    return null;
   }
 
   public Object visitTypeDeclaration(TypeDeclaration ast, Object o) {
@@ -793,13 +801,13 @@ public final class Encoder implements Visitor {
   // Decides run-time representation of a standard constant.
   private final void elaborateStdConst (Declaration constDeclaration,
 					int value) {
-
+      /*
     if (constDeclaration instanceof ConstDeclaration) {
       ConstDeclaration decl = (ConstDeclaration) constDeclaration;
       int typeSize = ((Integer) decl.E.type.visit(this, null)).intValue();
       decl.entity = new KnownValue(typeSize, value);
       writeTableDetails(constDeclaration);
-    }
+    }*/
   }
 
   // Decides run-time representation of a standard routine.
@@ -823,12 +831,12 @@ public final class Encoder implements Visitor {
 
   private final void elaborateStdEnvironment() {
     tableDetailsReqd = false;
-    elaborateStdConst(StdEnvironment.falseDecl, Machine.falseRep);
-    elaborateStdConst(StdEnvironment.trueDecl, Machine.trueRep);
+    //elaborateStdConst(StdEnvironment.falseDecl, Machine.falseRep);
+   //elaborateStdConst(StdEnvironment.trueDecl, Machine.trueRep);
     elaborateStdPrimRoutine(StdEnvironment.notDecl, Machine.notDisplacement);
     elaborateStdPrimRoutine(StdEnvironment.andDecl, Machine.andDisplacement);
     elaborateStdPrimRoutine(StdEnvironment.orDecl, Machine.orDisplacement);
-    elaborateStdConst(StdEnvironment.maxintDecl, Machine.maxintRep);
+    //elaborateStdConst(StdEnvironment.maxintDecl, Machine.maxintRep);
     elaborateStdPrimRoutine(StdEnvironment.addDecl, Machine.addDisplacement);
     elaborateStdPrimRoutine(StdEnvironment.subtractDecl, Machine.subDisplacement);
     elaborateStdPrimRoutine(StdEnvironment.multiplyDecl, Machine.multDisplacement);
@@ -838,16 +846,16 @@ public final class Encoder implements Visitor {
     elaborateStdPrimRoutine(StdEnvironment.notgreaterDecl, Machine.leDisplacement);
     elaborateStdPrimRoutine(StdEnvironment.greaterDecl, Machine.gtDisplacement);
     elaborateStdPrimRoutine(StdEnvironment.notlessDecl, Machine.geDisplacement);
-    elaborateStdPrimRoutine(StdEnvironment.chrDecl, Machine.idDisplacement);
-    elaborateStdPrimRoutine(StdEnvironment.ordDecl, Machine.idDisplacement);
-    elaborateStdPrimRoutine(StdEnvironment.eolDecl, Machine.eolDisplacement);
-    elaborateStdPrimRoutine(StdEnvironment.eofDecl, Machine.eofDisplacement);
-    elaborateStdPrimRoutine(StdEnvironment.getDecl, Machine.getDisplacement);
-    elaborateStdPrimRoutine(StdEnvironment.putDecl, Machine.putDisplacement);
-    elaborateStdPrimRoutine(StdEnvironment.getintDecl, Machine.getintDisplacement);
-    elaborateStdPrimRoutine(StdEnvironment.putintDecl, Machine.putintDisplacement);
-    elaborateStdPrimRoutine(StdEnvironment.geteolDecl, Machine.geteolDisplacement);
-    elaborateStdPrimRoutine(StdEnvironment.puteolDecl, Machine.puteolDisplacement);
+    //elaborateStdPrimRoutine(StdEnvironment.chrDecl, Machine.idDisplacement);
+    //elaborateStdPrimRoutine(StdEnvironment.ordDecl, Machine.idDisplacement);
+    //elaborateStdPrimRoutine(StdEnvironment.eolDecl, Machine.eolDisplacement);
+    //elaborateStdPrimRoutine(StdEnvironment.eofDecl, Machine.eofDisplacement);
+    //elaborateStdPrimRoutine(StdEnvironment.getDecl, Machine.getDisplacement);
+    //elaborateStdPrimRoutine(StdEnvironment.putDecl, Machine.putDisplacement);
+    //elaborateStdPrimRoutine(StdEnvironment.getintDecl, Machine.getintDisplacement);
+    //elaborateStdPrimRoutine(StdEnvironment.putintDecl, Machine.putintDisplacement);
+    //elaborateStdPrimRoutine(StdEnvironment.geteolDecl, Machine.geteolDisplacement);
+    //elaborateStdPrimRoutine(StdEnvironment.puteolDecl, Machine.puteolDisplacement);
     elaborateStdEqRoutine(StdEnvironment.equalDecl, Machine.eqDisplacement);
     elaborateStdEqRoutine(StdEnvironment.unequalDecl, Machine.neDisplacement);
   }

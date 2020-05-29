@@ -59,6 +59,7 @@ import Triangle.AbstractSyntaxTrees.MultipleFieldTypeDenoter;
 import Triangle.AbstractSyntaxTrees.MultipleFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.MultipleRecordAggregate;
 import Triangle.AbstractSyntaxTrees.Operator;
+import Triangle.AbstractSyntaxTrees.PriDeclaration;
 import Triangle.AbstractSyntaxTrees.ProcActualParameter;
 import Triangle.AbstractSyntaxTrees.ProcDeclaration;
 import Triangle.AbstractSyntaxTrees.ProcFormalParameter;
@@ -112,7 +113,7 @@ public final class Checker implements Visitor {
 
   public Object visitCallCommand(CallCommand ast, Object o) {
 
-    Declaration binding = (Declaration) ast.I.visit(this, null);
+   /* Declaration binding = (Declaration) ast.I.visit(this, null);
     if (binding == null)
       reportUndeclared(ast.I);
     else if (binding instanceof ProcDeclaration) {
@@ -121,7 +122,7 @@ public final class Checker implements Visitor {
       ast.APS.visit(this, ((ProcFormalParameter) binding).FPS);
     } else
       reporter.reportError("\"%\" is not a procedure identifier",
-                           ast.I.spelling, ast.I.position);
+                           ast.I.spelling, ast.I.position);*/
     return null;
   }
 
@@ -241,7 +242,7 @@ public final class Checker implements Visitor {
   }
 
   public Object visitCallExpression(CallExpression ast, Object o) {
-    Declaration binding = (Declaration) ast.I.visit(this, null);
+    /*Declaration binding = (Declaration) ast.I.visit(this, null);
     if (binding == null) {
       reportUndeclared(ast.I);
       ast.type = StdEnvironment.errorType;
@@ -254,6 +255,8 @@ public final class Checker implements Visitor {
     } else
       reporter.reportError("\"%\" is not a function identifier",
                            ast.I.spelling, ast.I.position);
+    return ast.type;*/
+    ast.type = null;
     return ast.type;
   }
 
@@ -339,17 +342,21 @@ public final class Checker implements Visitor {
     return null;
   }
   
+  public Object visitPriDeclaration(PriDeclaration ast, Object o) {  
+    return null;
+  }
+  
   public Object visitConstDeclaration(ConstDeclaration ast, Object o) {
-    TypeDenoter eType = (TypeDenoter) ast.E.visit(this, null);
+    /*TypeDenoter eType = (TypeDenoter) ast.E.visit(this, null);
     idTable.enter(ast.I.spelling, ast);
     if (ast.duplicated)
       reporter.reportError ("identifier \"%\" already declared",
-                            ast.I.spelling, ast.position);
+                            ast.I.spelling, ast.position);*/
     return null;
   }
 
   public Object visitFuncDeclaration(FuncDeclaration ast, Object o) {
-    ast.T = (TypeDenoter) ast.T.visit(this, null);
+    /*ast.T = (TypeDenoter) ast.T.visit(this, null);
     idTable.enter (ast.I.spelling, ast); // permits recursion
     if (ast.duplicated)
       reporter.reportError ("identifier \"%\" already declared",
@@ -360,19 +367,19 @@ public final class Checker implements Visitor {
     idTable.closeScope();
     if (! ast.T.equals(eType))
       reporter.reportError ("body of function \"%\" has wrong type",
-                            ast.I.spelling, ast.E.position);
+                            ast.I.spelling, ast.E.position);*/
     return null;
   }
 
   public Object visitProcDeclaration(ProcDeclaration ast, Object o) {
-    idTable.enter (ast.I.spelling, ast); // permits recursion
+    /*idTable.enter (ast.I.spelling, ast); // permits recursion
     if (ast.duplicated)
       reporter.reportError ("identifier \"%\" already declared",
                             ast.I.spelling, ast.position);
     idTable.openScope();
     ast.FPS.visit(this, null);
     ast.C.visit(this, null);
-    idTable.closeScope();
+    idTable.closeScope();*/
     return null;
   }
 
@@ -383,11 +390,11 @@ public final class Checker implements Visitor {
   }
 
   public Object visitTypeDeclaration(TypeDeclaration ast, Object o) {
-    ast.T = (TypeDenoter) ast.T.visit(this, null);
+    /*ast.T = (TypeDenoter) ast.T.visit(this, null);
     idTable.enter (ast.I.spelling, ast);
     if (ast.duplicated)
       reporter.reportError ("identifier \"%\" already declared",
-                            ast.I.spelling, ast.position);
+                            ast.I.spelling, ast.position);*/
     return null;
   }
 
@@ -396,11 +403,11 @@ public final class Checker implements Visitor {
   }
 
   public Object visitVarDeclaration(VarDeclaration ast, Object o) {
-    ast.T = (TypeDenoter) ast.T.visit(this, null);
+    /*ast.T = (TypeDenoter) ast.T.visit(this, null);
     idTable.enter (ast.I.spelling, ast);
     if (ast.duplicated)
       reporter.reportError ("identifier \"%\" already declared",
-                            ast.I.spelling, ast.position);
+                            ast.I.spelling, ast.position);*/
 
     return null;
   }
@@ -534,7 +541,7 @@ public final class Checker implements Visitor {
   }
 
   public Object visitFuncActualParameter(FuncActualParameter ast, Object o) {
-    FormalParameter fp = (FormalParameter) o;
+    /*FormalParameter fp = (FormalParameter) o;
 
     Declaration binding = (Declaration) ast.I.visit(this, null);
     if (binding == null)
@@ -562,12 +569,12 @@ public final class Checker implements Visitor {
       else if (! T.equals(((FuncFormalParameter) fp).T))
         reporter.reportError ("wrong type for function \"%\"",
                               ast.I.spelling, ast.I.position);
-    }
+    }*/
     return null;
   }
 
   public Object visitProcActualParameter(ProcActualParameter ast, Object o) {
-    FormalParameter fp = (FormalParameter) o;
+    /*FormalParameter fp = (FormalParameter) o;
 
     Declaration binding = (Declaration) ast.I.visit(this, null);
     if (binding == null)
@@ -588,7 +595,7 @@ public final class Checker implements Visitor {
       if (! FPS.equals(((ProcFormalParameter) fp).FPS))
         reporter.reportError ("wrong signature for procedure \"%\"",
                               ast.I.spelling, ast.I.position);
-    }
+    }*/
     return null;
   }
 
@@ -665,7 +672,7 @@ public final class Checker implements Visitor {
   }
 
   public Object visitSimpleTypeDenoter(SimpleTypeDenoter ast, Object o) {
-    Declaration binding = (Declaration) ast.I.visit(this, null);
+    /*Declaration binding = (Declaration) ast.I.visit(this, null);
     if (binding == null) {
       reportUndeclared (ast.I);
       return StdEnvironment.errorType;
@@ -674,7 +681,8 @@ public final class Checker implements Visitor {
                             ast.I.spelling, ast.I.position);
       return StdEnvironment.errorType;
     }
-    return ((TypeDeclaration) binding).T;
+    return ((TypeDeclaration) binding).T;*/
+    return ast;
   }
 
   public Object visitIntTypeDenoter(IntTypeDenoter ast, Object o) {
@@ -757,7 +765,7 @@ public final class Checker implements Visitor {
   }
 
   public Object visitSimpleVname(SimpleVname ast, Object o) {
-    ast.variable = false;
+    /*ast.variable = false;
     ast.type = StdEnvironment.errorType;
     Declaration binding = (Declaration) ast.I.visit(this, null);
     if (binding == null)
@@ -777,7 +785,7 @@ public final class Checker implements Visitor {
         ast.variable = true;
       } else
         reporter.reportError ("\"%\" is not a const or var identifier",
-                              ast.I.spelling, ast.I.position);
+                              ast.I.spelling, ast.I.position);*/
     return ast.type;
   }
 
@@ -862,12 +870,13 @@ public final class Checker implements Visitor {
   // type, and enters it in the identification table.
 
   private TypeDeclaration declareStdType (String id, TypeDenoter typedenoter) {
-
+      /*
     TypeDeclaration binding;
 
     binding = new TypeDeclaration(new Identifier(id, dummyPos), typedenoter, dummyPos);
     idTable.enter(id, binding);
-    return binding;
+    return binding;*/
+      return null;
   }
 
   // Creates a small AST to represent the "declaration" of a standard
@@ -875,7 +884,7 @@ public final class Checker implements Visitor {
 
   private ConstDeclaration declareStdConst (String id, TypeDenoter constType) {
 
-    IntegerExpression constExpr;
+    /*IntegerExpression constExpr;
     ConstDeclaration binding;
 
     // constExpr used only as a placeholder for constType
@@ -883,7 +892,8 @@ public final class Checker implements Visitor {
     constExpr.type = constType;
     binding = new ConstDeclaration(new Identifier(id, dummyPos), constExpr, dummyPos);
     idTable.enter(id, binding);
-    return binding;
+    return binding;*/
+    return null;
   }
 
   // Creates a small AST to represent the "declaration" of a standard
@@ -891,12 +901,13 @@ public final class Checker implements Visitor {
 
   private ProcDeclaration declareStdProc (String id, FormalParameterSequence fps) {
 
-    ProcDeclaration binding;
+    /*ProcDeclaration binding;
 
     binding = new ProcDeclaration(new Identifier(id, dummyPos), fps,
                                   new EmptyCommand(dummyPos), dummyPos);
     idTable.enter(id, binding);
-    return binding;
+    return binding;*/
+    return null;
   }
 
   // Creates a small AST to represent the "declaration" of a standard
@@ -904,13 +915,14 @@ public final class Checker implements Visitor {
 
   private FuncDeclaration declareStdFunc (String id, FormalParameterSequence fps,
                                           TypeDenoter resultType) {
-
+      /*
     FuncDeclaration binding;
 
     binding = new FuncDeclaration(new Identifier(id, dummyPos), fps, resultType,
                                   new EmptyExpression(dummyPos), dummyPos);
     idTable.enter(id, binding);
-    return binding;
+    return binding;*/
+      return null;
   }
 
   // Creates a small AST to represent the "declaration" of a

@@ -44,6 +44,7 @@ import Triangle.AbstractSyntaxTrees.MultipleFieldTypeDenoter;
 import Triangle.AbstractSyntaxTrees.MultipleFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.MultipleRecordAggregate;
 import Triangle.AbstractSyntaxTrees.Operator;
+import Triangle.AbstractSyntaxTrees.PriDeclaration;
 import Triangle.AbstractSyntaxTrees.ProcActualParameter;
 import Triangle.AbstractSyntaxTrees.ProcDeclaration;
 import Triangle.AbstractSyntaxTrees.ProcFormalParameter;
@@ -205,6 +206,10 @@ public class TreeVisitor implements Visitor {
     
     public Object visitFuncDeclaration(FuncDeclaration ast, Object obj) {
         return(createQuaternary("Function Declaration", ast.I, ast.FPS, ast.T, ast.E));
+    }
+    
+    public Object visitPriDeclaration(PriDeclaration ast, Object o) {  
+        return(createBinary("Private Declaration", ast.D1, ast.D2));
     }
     
     public Object visitProcDeclaration(ProcDeclaration ast, Object obj) {

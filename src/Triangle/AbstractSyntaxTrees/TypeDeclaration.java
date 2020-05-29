@@ -16,7 +16,7 @@ package Triangle.AbstractSyntaxTrees;
 
 import Triangle.SyntacticAnalyzer.SourcePosition;
 
-public class TypeDeclaration extends Declaration {
+public class TypeDeclaration extends Declaration{
 
   public TypeDeclaration(Identifier iAST, TypeDenoter tAST,
                          SourcePosition thePosition) {

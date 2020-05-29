@@ -56,6 +56,7 @@ import Triangle.AbstractSyntaxTrees.MultipleFieldTypeDenoter;
 import Triangle.AbstractSyntaxTrees.MultipleFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.MultipleRecordAggregate;
 import Triangle.AbstractSyntaxTrees.Operator;
+import Triangle.AbstractSyntaxTrees.PriDeclaration;
 import Triangle.AbstractSyntaxTrees.ProcActualParameter;
 import Triangle.AbstractSyntaxTrees.ProcDeclaration;
 import Triangle.AbstractSyntaxTrees.ProcFormalParameter;
@@ -233,6 +234,10 @@ public class LayoutVisitor implements Visitor {
   
   public Object visitVarExpDeclaration(VarExpDeclaration ast, Object o) {
     return layoutBinary("VarDeclExpr.", ast.I, ast.E);
+  }
+  
+  public Object visitPriDeclaration(PriDeclaration ast, Object o) {
+    return layoutBinary("Priv Decl.", ast.D1, ast.D2);
   }
 
   // Array Aggregates
