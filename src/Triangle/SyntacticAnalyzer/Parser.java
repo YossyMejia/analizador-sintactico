@@ -171,7 +171,7 @@ public class Parser {
       }
     }
     catch (SyntaxError s) { return null; }
-    writer.write(programAST);
+    //writer.write(programAST);
     return programAST;
   }
 
@@ -769,16 +769,20 @@ public class Parser {
     
     SourcePosition declarationPos = new SourcePosition();
     start(declarationPos);
-    dAST = parseProcSingle();
+    Declaration pAST = parseProcSingle(); 
+    accept(Token.AND);  
+    Declaration pAST2 = parseProcSingle();  
+    dAST = new ProcsDeclaration(pAST, pAST2, declarationPos);
     while (currentToken.kind == Token.AND) {
       acceptIt();
-      Declaration d2AST = parseProcSingle();
+      pAST = parseProcSingle();
       finish(declarationPos);
-      dAST = new ProcsDeclaration(dAST, d2AST,
+      dAST = new ProcsDeclaration(pAST, dAST,
         declarationPos);
     }
     return dAST;
   }
+ 
   
   Declaration parseProcSingle() throws SyntaxError {
     Declaration DeclarationAST = null; // in case there's a syntactic error
