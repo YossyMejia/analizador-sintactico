@@ -48,6 +48,7 @@ import Triangle.AbstractSyntaxTrees.PriDeclaration;
 import Triangle.AbstractSyntaxTrees.ProcActualParameter;
 import Triangle.AbstractSyntaxTrees.ProcDeclaration;
 import Triangle.AbstractSyntaxTrees.ProcFormalParameter;
+import Triangle.AbstractSyntaxTrees.ProcsDeclaration;
 import Triangle.AbstractSyntaxTrees.Program;
 import Triangle.AbstractSyntaxTrees.RecordExpression;
 import Triangle.AbstractSyntaxTrees.RecordTypeDenoter;
@@ -219,6 +220,11 @@ public class TreeVisitor implements Visitor {
     public Object visitSequentialDeclaration(SequentialDeclaration ast, Object obj) {
         return(createBinary("Sequential Declaration", ast.D1, ast.D2));
     }
+    
+    public Object visitProcsDeclaration(ProcsDeclaration ast, Object obj) {
+        return(createBinary("proc-funcs", ast.D1, ast.D2));
+    }
+    
     
     public Object visitTypeDeclaration(TypeDeclaration ast, Object obj) {
         return(createBinary("Type Declaration", ast.I, ast.T));

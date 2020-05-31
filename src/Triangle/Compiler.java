@@ -21,6 +21,7 @@ import Triangle.SyntacticAnalyzer.Parser;
 import Triangle.SyntacticAnalyzer.Scanner;
 import Triangle.SyntacticAnalyzer.SourceFile;
 import Triangle.TreeDrawer.Drawer;
+import Triangle.TreeWriterHTML.Writer;
 
 /**
  * The main driver class for the Triangle compiler.
@@ -38,6 +39,7 @@ public class Compiler {
     private static Checker checker;
     private static Encoder encoder;
     private static ErrorReporter reporter;
+    private static Writer writer;
     private static Drawer drawer;
 
     /** The AST representing the source program. */
@@ -75,7 +77,8 @@ public class Compiler {
 
         scanner  = new Scanner(source);
         reporter = new ErrorReporter();
-        parser   = new Parser(scanner, reporter);
+        writer   = new Writer(sourceName);
+        parser   = new Parser(scanner, reporter, writer);
         checker  = new Checker(reporter);
         encoder  = new Encoder(reporter);
         drawer   = new Drawer();

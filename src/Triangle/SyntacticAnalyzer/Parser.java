@@ -60,6 +60,7 @@ import Triangle.AbstractSyntaxTrees.PriDeclaration;
 import Triangle.AbstractSyntaxTrees.ProcActualParameter;
 import Triangle.AbstractSyntaxTrees.ProcDeclaration;
 import Triangle.AbstractSyntaxTrees.ProcFormalParameter;
+import Triangle.AbstractSyntaxTrees.ProcsDeclaration;
 import Triangle.AbstractSyntaxTrees.Program;
 import Triangle.AbstractSyntaxTrees.RecordAggregate;
 import Triangle.AbstractSyntaxTrees.RecordExpression;
@@ -88,6 +89,7 @@ import Triangle.AbstractSyntaxTrees.VnameExpression;
 import Triangle.AbstractSyntaxTrees.WhileCommand;
 import Triangle.AbstractSyntaxTrees.doUntilCommand;
 import Triangle.AbstractSyntaxTrees.doWhileCommand;
+import Triangle.TreeWriterHTML.Writer;
 
 public class Parser {
 
@@ -95,10 +97,12 @@ public class Parser {
   private ErrorReporter errorReporter;
   private Token currentToken;
   private SourcePosition previousTokenPosition;
+  private Writer writer;
 
-  public Parser(Scanner lexer, ErrorReporter reporter) {
+  public Parser(Scanner lexer, ErrorReporter reporter, Writer writer) {
     lexicalAnalyser = lexer;
     errorReporter = reporter;
+    this.writer = writer;
     previousTokenPosition = new SourcePosition();
   }
 
@@ -167,6 +171,7 @@ public class Parser {
       }
     }
     catch (SyntaxError s) { return null; }
+    writer.write(programAST);
     return programAST;
   }
 
@@ -721,7 +726,9 @@ public class Parser {
     case Token.REC:
       {
           acceptIt();
-          
+          dAST = parseProc();
+          accept(Token.END);    
+          finish(declarationPos);
       }
       break;
       
@@ -757,6 +764,70 @@ public class Parser {
     return dAST;
   }
   
+  Declaration parseProc()  throws SyntaxError {
+    Declaration dAST = null;
+    
+    SourcePosition declarationPos = new SourcePosition();
+    start(declarationPos);
+    dAST = parseProcSingle();
+    while (currentToken.kind == Token.AND) {
+      acceptIt();
+      Declaration d2AST = parseProcSingle();
+      finish(declarationPos);
+      dAST = new ProcsDeclaration(dAST, d2AST,
+        declarationPos);
+    }
+    return dAST;
+  }
+  
+  Declaration parseProcSingle() throws SyntaxError {
+    Declaration DeclarationAST = null; // in case there's a syntactic error
+
+    SourcePosition declarationPos = new SourcePosition();
+    start(declarationPos);
+
+    switch (currentToken.kind) {
+
+      case Token.PROC:
+      {
+        acceptIt();
+        Identifier iAST = parseIdentifier();
+        accept(Token.LPAREN);
+        FormalParameterSequence fpsAST = parseFormalParameterSequence();
+        accept(Token.RPAREN);
+        accept(Token.IS);
+        Command cAST = parseCommand();
+        accept(Token.END);
+        finish(declarationPos);
+        DeclarationAST = new ProcDeclaration(iAST, fpsAST, cAST, declarationPos);
+      }
+      break;
+      
+      case Token.FUNC:
+      {
+        acceptIt();
+        Identifier iAST = parseIdentifier();
+        accept(Token.LPAREN);
+        FormalParameterSequence fpsAST = parseFormalParameterSequence();
+        accept(Token.RPAREN);
+        accept(Token.COLON);
+        TypeDenoter tAST = parseTypeDenoter();
+        accept(Token.IS);
+        Expression eAST = parseExpression();
+        finish(declarationPos);
+        DeclarationAST = new FuncDeclaration(iAST, fpsAST, tAST, eAST,
+          declarationPos);
+      }
+      break;
+      
+      default:
+      syntacticError("\"%\" cannot start a declaration",
+        currentToken.spelling);
+      break;
+
+    }
+    return DeclarationAST;
+  }
   
   Declaration parseSingleDeclaration() throws SyntaxError {
     Declaration DeclarationAST = null; // in case there's a syntactic error

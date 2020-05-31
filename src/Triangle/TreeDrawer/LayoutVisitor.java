@@ -60,6 +60,7 @@ import Triangle.AbstractSyntaxTrees.PriDeclaration;
 import Triangle.AbstractSyntaxTrees.ProcActualParameter;
 import Triangle.AbstractSyntaxTrees.ProcDeclaration;
 import Triangle.AbstractSyntaxTrees.ProcFormalParameter;
+import Triangle.AbstractSyntaxTrees.ProcsDeclaration;
 import Triangle.AbstractSyntaxTrees.Program;
 import Triangle.AbstractSyntaxTrees.RecordExpression;
 import Triangle.AbstractSyntaxTrees.RecordTypeDenoter;
@@ -220,6 +221,11 @@ public class LayoutVisitor implements Visitor {
     return layoutBinary("Seq.Decl.", ast.D1, ast.D2);
   }
 
+  public Object visitProcsDeclaration(ProcsDeclaration ast, Object obj) {
+    return layoutBinary("Procs-func", ast.D1, ast.D2);
+  }
+  
+  
   public Object visitTypeDeclaration(TypeDeclaration ast, Object obj) {
     return layoutBinary("TypeDecl.", ast.I, ast.T);
   }

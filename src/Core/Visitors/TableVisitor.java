@@ -48,6 +48,7 @@ import Triangle.AbstractSyntaxTrees.PriDeclaration;
 import Triangle.AbstractSyntaxTrees.ProcActualParameter;
 import Triangle.AbstractSyntaxTrees.ProcDeclaration;
 import Triangle.AbstractSyntaxTrees.ProcFormalParameter;
+import Triangle.AbstractSyntaxTrees.ProcsDeclaration;
 import Triangle.AbstractSyntaxTrees.Program;
 import Triangle.AbstractSyntaxTrees.RecordExpression;
 import Triangle.AbstractSyntaxTrees.RecordTypeDenoter;
@@ -324,6 +325,14 @@ public class TableVisitor implements Visitor {
       
       return(null);
   }
+  
+  public Object visitProcsDeclaration(ProcsDeclaration ast, Object o) {   
+      ast.D1.visit(this, null);
+      ast.D2.visit(this, null);
+      
+      return(null);
+  }
+  
   
   public Object visitTypeDeclaration(TypeDeclaration ast, Object o) { 
       ast.T.visit(this, null);
