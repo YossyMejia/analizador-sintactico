@@ -171,7 +171,7 @@ public class Parser {
       }
     }
     catch (SyntaxError s) { return null; }
-    //writer.write(programAST);
+    writer.write(programAST);
     return programAST;
   }
 
@@ -607,7 +607,6 @@ public class Parser {
       break;
 
     default:
-       // System.out.println(currentToken.kind+currentToken.spelling);
         syntacticError("\"%\" cannot start an expression",
         currentToken.spelling);
       break;
