@@ -14,6 +14,8 @@
 
 package Triangle.SyntacticAnalyzer;
 
+import Triangle.TreeWriterHTML.WriterHTML;
+
 
 public final class Scanner {
 
@@ -23,6 +25,8 @@ public final class Scanner {
   private char currentChar;
   private StringBuffer currentSpelling;
   private boolean currentlyScanningToken;
+  private String comentario = "";
+  private WriterHTML writer;
 
   private boolean isLetter(char c) {
     return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
@@ -44,7 +48,9 @@ public final class Scanner {
 
 ///////////////////////////////////////////////////////////////////////////////
 
-  public Scanner(SourceFile source) {
+  public Scanner(SourceFile source, WriterHTML writer) {
+    this.writer = writer;
+    writer.createFile();
     sourceFile = source;
     currentChar = sourceFile.getSource();
     debug = false;
@@ -69,15 +75,23 @@ public final class Scanner {
     switch (currentChar) {
     case '!':
       {
+        comentario+=currentChar;
         takeIt();
-        while ((currentChar != SourceFile.EOL) && (currentChar != SourceFile.EOT))
+        while ((currentChar != SourceFile.EOL) && (currentChar != SourceFile.EOT)){
+          comentario+=currentChar;
           takeIt();
-        if (currentChar == SourceFile.EOL)
+        }
+        if (currentChar == SourceFile.EOL){
+          comentario+=currentChar;
           takeIt();
+        }
+        writer.writeComment(comentario);
+        comentario = "";
       }
       break;
 
     case ' ': case '\n': case '\r': case '\t':
+      writer.writeSpaceWord(currentChar);
       takeIt();
       break;
     }
@@ -184,7 +198,11 @@ public final class Scanner {
       return Token.ERROR;
     }
   }
-
+  
+  public void finishScan(){
+      writer.closeFile();
+  }
+  
   public Token scan () {
     Token tok;
     SourcePosition pos;
@@ -196,7 +214,9 @@ public final class Scanner {
            || currentChar == '\n'
            || currentChar == '\r'
            || currentChar == '\t')
+    {   
       scanSeparator();
+    }
 
     currentlyScanningToken = true;
     currentSpelling = new StringBuffer("");
@@ -206,6 +226,15 @@ public final class Scanner {
     kind = scanToken();
     pos.finish = sourceFile.getCurrentLine();
     tok = new Token(kind, currentSpelling.toString(), pos);
+    //System.out.println(tok.kind + tok.spelling);
+    
+    if(tok.kind>=4&&tok.kind<=30)
+        writer.writeReservedWord(tok.spelling);       //Escribir palabra reservada
+    else if(tok.kind <=1)
+        writer.writeLiteralWord(tok.spelling);
+    else
+        writer.writeNormalWord(tok.spelling); 
+    
     if (debug)
       System.out.println(tok);
     return tok;

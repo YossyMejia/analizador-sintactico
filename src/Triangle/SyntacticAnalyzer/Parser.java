@@ -171,6 +171,7 @@ public class Parser {
       }
     }
     catch (SyntaxError s) { return null; }
+    lexicalAnalyser.finishScan();
     writer.write(programAST);
     return programAST;
   }

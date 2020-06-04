@@ -4,15 +4,24 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/User/Documentos/Semestre/Compiladores/analizador-sintactico/src/Triangle/AbstractSyntaxTrees/VarExpDeclaration.java</file>
+            <file>file:/E:/User/Documentos/Semestre/Compiladores/analizador-sintactico/src/Triangle/ContextualAnalyzer/IdEntry.java</file>
             <file>file:/E:/User/Documentos/Semestre/Compiladores/analizador-sintactico/src/Triangle/AbstractSyntaxTrees/Visitor.java</file>
+            <file>file:/E:/User/Documentos/Semestre/Compiladores/analizador-sintactico/src/GUI/Main.java</file>
+            <file>file:/E:/User/Documentos/Semestre/Compiladores/analizador-sintactico/src/Triangle/AbstractSyntaxTrees/ProcDeclaration.java</file>
+            <file>file:/E:/User/Documentos/Semestre/Compiladores/analizador-sintactico/src/Triangle/AbstractSyntaxTrees/ProcsDeclaration.java</file>
+            <file>file:/E:/User/Documentos/Semestre/Compiladores/analizador-sintactico/src/Triangle/SyntacticAnalyzer/Token.java</file>
+            <file>file:/E:/User/Documentos/Semestre/Compiladores/analizador-sintactico/src/Triangle/TreeWriterHTML/Writer.java</file>
+            <file>file:/E:/User/Documentos/Semestre/Compiladores/analizador-sintactico/src/Triangle/AbstractSyntaxTrees/ConstDeclaration.java</file>
+            <file>file:/E:/User/Documentos/Semestre/Compiladores/analizador-sintactico/src/Triangle/IDECompiler.java</file>
+            <file>file:/E:/User/Documentos/Semestre/Compiladores/analizador-sintactico/src/Triangle/AbstractSyntaxTrees/VarExpDeclaration.java</file>
+            <file>file:/E:/User/Documentos/Semestre/Compiladores/analizador-sintactico/src/Triangle/SyntacticAnalyzer/Scanner.java</file>
             <file>file:/E:/User/Documentos/Semestre/Compiladores/analizador-sintactico/src/Triangle/TreeWriterHTML/WriterVisitor.java</file>
             <file>file:/E:/User/Documentos/Semestre/Compiladores/analizador-sintactico/src/Triangle/SyntacticAnalyzer/Parser.java</file>
-            <file>file:/E:/User/Documentos/Semestre/Compiladores/analizador-sintactico/src/Triangle/AbstractSyntaxTrees/ProcDeclaration.java</file>
             <file>file:/E:/User/Documentos/Semestre/Compiladores/analizador-sintactico/src/Triangle/TreeDrawer/LayoutVisitor.java</file>
-            <file>file:/E:/User/Documentos/Semestre/Compiladores/analizador-sintactico/src/Triangle/AbstractSyntaxTrees/ProcsDeclaration.java</file>
+            <file>file:/E:/User/Documentos/Semestre/Compiladores/analizador-sintactico/src/Triangle/SyntacticAnalyzer/SourceFile.java</file>
+            <file>file:/E:/User/Documentos/Semestre/Compiladores/analizador-sintactico/src/Triangle/TreeWriterHTML/WriterHTML.java</file>
+            <file>file:/E:/User/Documentos/Semestre/Compiladores/analizador-sintactico/src/Triangle/Compiler.java</file>
             <file>file:/E:/User/Documentos/Semestre/Compiladores/analizador-sintactico/src/Triangle/AbstractSyntaxTrees/PriDeclaration.java</file>
-            <file>file:/E:/User/Documentos/Semestre/Compiladores/analizador-sintactico/src/Triangle/AbstractSyntaxTrees/ConstDeclaration.java</file>
         </group>
     </open-files>
 </project-private>
